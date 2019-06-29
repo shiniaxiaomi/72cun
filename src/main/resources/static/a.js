@@ -1,0 +1,3 @@
+javascript:(function (x, sc, width, height) {
+    var newWin = window.open('http://localhost:3000?url='+encodeURIComponent(location.href)+'&label='+encodeURIComponent(x.title), '_blank', 'toolbar=yes, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=no, copyhistory=yes, width=' + width + ', height=' + height + ',left=' + (sc.width - width) / 2 + ',top=' + (sc.height - 50 - height) / 2);
+})(document, screen, 1420, 760);

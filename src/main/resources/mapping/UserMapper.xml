@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lyj.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.lyj.model.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="rootFolderId" property="rootFolderId" jdbcType="INTEGER" />
+    <result column="customFolderId" property="customFolderId" jdbcType="INTEGER" />
+    <result column="customFolderName" property="customFolderName" jdbcType="VARCHAR" />
+    <result column="lastLoginTime" property="lastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="phoneNumber" property="phoneNumber" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, password, userName, rootFolderId, customFolderId, customFolderName, lastLoginTime, 
+    phoneNumber
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lyj.model.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lyj.model.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lyj.model.User" useGeneratedKeys="true" keyProperty="id" >
+    insert into user (password, userName, rootFolderId, 
+      customFolderId, customFolderName, lastLoginTime, 
+      phoneNumber)
+    values (#{password,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{rootFolderId,jdbcType=INTEGER}, 
+      #{customFolderId,jdbcType=INTEGER}, #{customFolderName,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{phoneNumber,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lyj.model.User" useGeneratedKeys="true" keyProperty="id" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="userName != null" >
+        userName,
+      </if>
+      <if test="rootFolderId != null" >
+        rootFolderId,
+      </if>
+      <if test="customFolderId != null" >
+        customFolderId,
+      </if>
+      <if test="customFolderName != null" >
+        customFolderName,
+      </if>
+      <if test="lastLoginTime != null" >
+        lastLoginTime,
+      </if>
+      <if test="phoneNumber != null" >
+        phoneNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="rootFolderId != null" >
+        #{rootFolderId,jdbcType=INTEGER},
+      </if>
+      <if test="customFolderId != null" >
+        #{customFolderId,jdbcType=INTEGER},
+      </if>
+      <if test="customFolderName != null" >
+        #{customFolderName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null" >
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        userName = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rootFolderId != null" >
+        rootFolderId = #{record.rootFolderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.customFolderId != null" >
+        customFolderId = #{record.customFolderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.customFolderName != null" >
+        customFolderName = #{record.customFolderName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastLoginTime != null" >
+        lastLoginTime = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.phoneNumber != null" >
+        phoneNumber = #{record.phoneNumber,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set id = #{record.id,jdbcType=INTEGER},
+      password = #{record.password,jdbcType=VARCHAR},
+      userName = #{record.userName,jdbcType=VARCHAR},
+      rootFolderId = #{record.rootFolderId,jdbcType=INTEGER},
+      customFolderId = #{record.customFolderId,jdbcType=INTEGER},
+      customFolderName = #{record.customFolderName,jdbcType=VARCHAR},
+      lastLoginTime = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      phoneNumber = #{record.phoneNumber,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lyj.model.User" >
+    update user
+    <set >
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        userName = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="rootFolderId != null" >
+        rootFolderId = #{rootFolderId,jdbcType=INTEGER},
+      </if>
+      <if test="customFolderId != null" >
+        customFolderId = #{customFolderId,jdbcType=INTEGER},
+      </if>
+      <if test="customFolderName != null" >
+        customFolderName = #{customFolderName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null" >
+        lastLoginTime = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phoneNumber != null" >
+        phoneNumber = #{phoneNumber,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lyj.model.User" >
+    update user
+    set password = #{password,jdbcType=VARCHAR},
+      userName = #{userName,jdbcType=VARCHAR},
+      rootFolderId = #{rootFolderId,jdbcType=INTEGER},
+      customFolderId = #{customFolderId,jdbcType=INTEGER},
+      customFolderName = #{customFolderName,jdbcType=VARCHAR},
+      lastLoginTime = #{lastLoginTime,jdbcType=TIMESTAMP},
+      phoneNumber = #{phoneNumber,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

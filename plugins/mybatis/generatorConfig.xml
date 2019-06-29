@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!-- mybatis自动生成代码的xml配置文件，该文件的指定路径已经在maven中配置好了 -->
+<generatorConfiguration>
+
+
+    <!--数据库驱动,已经在maven中配置好了，已无需配置-->
+    <!--<classPathEntry    location="mysql-connector-java-5.1.46.jar"/>-->
+
+    <context id="default"    targetRuntime="MyBatis3">
+
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8" />
+
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter" />
+
+        <!-- JavaBean 实现 序列化 接口 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+
+        <!-- 自定义物理分页  可生成支持Mysql数据的limit  不支持Oracle -->
+        <!--<plugin type="org.mybatis.generator.plugins.page.PaginationPlugin" />-->
+        <!-- 自定义查询指定字段  -->
+        <!--<plugin type="org.mybatis.generator.plugins.field.FieldsPlugin" />-->
+        <!-- 开启支持内存分页   可生成 支持内存分布的方法及参数-->
+        <!--<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />-->
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接地址账号密码-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost/72cun"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+
+
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+
+
+
+        <!--生成Model类存放位置-->
+        <javaModelGenerator targetPackage="com.lyj.model" targetProject="plugins/mybatis/src">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--生成映射文件存放位置-->
+        <sqlMapGenerator targetPackage="com.lyj.mapping" targetProject="plugins/mybatis/src">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--生成Dao类存放位置-->
+        <!--ANNOTATEDMAPPER: 生成java类文件,基于注解的Mapper接口，不会有对应的XML映射文件
+            MIXEDMAPPER:XML和注解的混合形式
+            XMLMAPPER:所有的方法都在XML中，接口调用依赖XML文件 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lyj.dao" targetProject="plugins/mybatis/src">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+
+        <!--生成对应表及类名-->
+        <table
+                tableName="folder"
+                domainObjectName="Folder"
+                enableCountByExample="false"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+            <!-- 在插入数据时返回主键 -->
+            <generatedKey column="id" sqlStatement="JDBC"/>
+
+        </table>
+        <table
+                tableName="url"
+                domainObjectName="Url"
+                enableCountByExample="false"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+        <table
+                tableName="user"
+                domainObjectName="User"
+                enableCountByExample="false"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+
+
+    </context>
+</generatorConfiguration>
