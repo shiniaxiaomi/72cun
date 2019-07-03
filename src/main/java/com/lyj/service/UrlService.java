@@ -3,9 +3,11 @@ package com.lyj.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lyj.dao.UrlMapper;
+import com.lyj.dao.vo.RecommondDataMapper;
 import com.lyj.exception.MessageException;
 import com.lyj.model.Url;
 import com.lyj.model.UrlExample;
+import com.lyj.model.vo.RecommondData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,10 @@ import java.util.List;
 public class UrlService {
 
     @Autowired
-    UrlMapper urlMapper;
+    UrlMapper urlMapper;//网址数据
+
+    @Autowired
+    RecommondDataMapper recommondDataMapper;//推荐数据
 
 
     public PageInfo<Url> getUrls(int userId, int page, int limit) {
@@ -79,5 +84,10 @@ public class UrlService {
         if (i != 1) {
             throw new MessageException("网址添加失败！");
         }
+    }
+
+    public PageInfo getRecommondData(int limit) {
+        List<RecommondData> recommondData = recommondDataMapper.getRecommondData(limit);
+        return new PageInfo<>(recommondData);
     }
 }

@@ -54,6 +54,7 @@ public class WebConfig implements WebMvcConfigurer {
                         ,"/user/addUser"
                         ,"/url/addUrlFaster" //快速添加网址，不需要进行登入
                         ,"/url/search" //快速添加网址，不需要进行登入
+                        ,"/url/getRecommondData" //获取推荐数据
                 );
     }
 

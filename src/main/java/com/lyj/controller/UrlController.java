@@ -9,11 +9,11 @@ import com.lyj.service.UserService;
 import com.lyj.util.BASE64Util;
 import com.lyj.util.Message;
 import com.lyj.util.MessageUtil;
+import com.lyj.model.vo.RecommondData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -159,6 +159,14 @@ public class UrlController {
         return new ModelAndView("addurlfaster");
 
 
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/getRecommondData")
+    public PageInfo<RecommondData> getRecommondData(int limit)  {
+        PageInfo recommondData = urlService.getRecommondData(30);
+        return recommondData;
     }
 
 
