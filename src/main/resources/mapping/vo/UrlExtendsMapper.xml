@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lyj.dao.vo.UrlExtendsMapper">
+
+    <select id="getRecommondData" resultType="com.lyj.model.vo.UrlExtends" parameterType="java.lang.Integer">
+       SELECT t1.*,user.userName FROM `url` AS t1
+       JOIN (SELECT ROUND(RAND() * (SELECT MAX(id) FROM `url`)) AS id) AS t2
+       LEFT JOIN USER ON t1.userId=user.id
+        WHERE t1.id >= t2.id
+        ORDER BY t1.id ASC LIMIT #{limit};
+    </select>
+    <select id="getAttentionData" resultType="com.lyj.model.vo.UrlExtends">
+
+
+    </select>
+    <select id="getHotData" resultType="com.lyj.model.vo.UrlExtends">
+
+
+    </select>
+    <select id="getSearchData" resultType="com.lyj.model.vo.UrlExtends" >
+        select url.*,user.userName from url
+        LEFT JOIN user on url.userId=user.id
+        where url.label like #{keyword}
+    </select>
+
+</mapper>

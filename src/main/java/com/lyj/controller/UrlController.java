@@ -9,7 +9,7 @@ import com.lyj.service.UserService;
 import com.lyj.util.BASE64Util;
 import com.lyj.util.Message;
 import com.lyj.util.MessageUtil;
-import com.lyj.model.vo.RecommondData;
+import com.lyj.model.vo.UrlExtends;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -162,12 +162,16 @@ public class UrlController {
     }
 
 
+    //-----以下是首页的一些请求----
     @ResponseBody
     @RequestMapping("/getRecommondData")
-    public PageInfo<RecommondData> getRecommondData(int limit)  {
-        PageInfo recommondData = urlService.getRecommondData(30);
-        return recommondData;
+    public PageInfo<UrlExtends> getRecommondData(int limit)  {
+        return urlService.getRecommondData(limit);
     }
 
-
+    @ResponseBody
+    @RequestMapping("/getSearchData")
+    public PageInfo<UrlExtends> getSearchData( String keyword, int page, int limit){
+        return urlService.getSearchData(keyword, page, limit);
+    }
 }

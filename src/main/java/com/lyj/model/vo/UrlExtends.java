@@ -5,7 +5,7 @@ import com.lyj.model.Url;
 /**
  * 封装 推荐数据 的数据类型
  */
-public class RecommondData extends Url{
+public class UrlExtends extends Url{
 
     private String userName;
 

@@ -3,11 +3,11 @@ package com.lyj.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lyj.dao.UrlMapper;
-import com.lyj.dao.vo.RecommondDataMapper;
+import com.lyj.dao.vo.UrlExtendsMapper;
 import com.lyj.exception.MessageException;
 import com.lyj.model.Url;
 import com.lyj.model.UrlExample;
-import com.lyj.model.vo.RecommondData;
+import com.lyj.model.vo.UrlExtends;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class UrlService {
     UrlMapper urlMapper;//网址数据
 
     @Autowired
-    RecommondDataMapper recommondDataMapper;//推荐数据
+    UrlExtendsMapper urlExtendsMapper;//推荐数据
 
 
     public PageInfo<Url> getUrls(int userId, int page, int limit) {
@@ -86,8 +86,15 @@ public class UrlService {
         }
     }
 
+    //-----以下是首页的一些请求----
     public PageInfo getRecommondData(int limit) {
-        List<RecommondData> recommondData = recommondDataMapper.getRecommondData(limit);
+        List<UrlExtends> recommondData = urlExtendsMapper.getRecommondData(limit);
         return new PageInfo<>(recommondData);
+    }
+
+    public PageInfo<UrlExtends> getSearchData(String keyword, int page, int limit) {
+        PageHelper.startPage(page, limit);
+        List<UrlExtends> searchData = urlExtendsMapper.getSearchData("%"+keyword+"%");
+        return new PageInfo<>(searchData);
     }
 }
