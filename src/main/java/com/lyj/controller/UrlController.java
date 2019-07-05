@@ -28,7 +28,7 @@ import java.util.Random;
 @RequestMapping("/url")
 public class UrlController {
 
-    public Random random=new Random();
+    public Random random = new Random();
 
 
     @Autowired
@@ -38,25 +38,24 @@ public class UrlController {
     UserService userService;
 
 
-
     @ResponseBody
     @RequestMapping("/getUrls")
-    public PageInfo<Url> getUrls(HttpSession session,int page, int limit){
+    public PageInfo<Url> getUrls(HttpSession session, int page, int limit) {
         User user = (User) session.getAttribute("user");
-        return urlService.getUrls(user.getId(),page, limit);
+        return urlService.getUrls(user.getId(), page, limit);
     }
 
 
     @ResponseBody
     @RequestMapping("/searchByUserId")
-    public PageInfo<Url> search(int userId, String keyword, int page, int limit){
+    public PageInfo<Url> search(int userId, String keyword, int page, int limit) {
         return urlService.search(userId, keyword, page, limit);
     }
 
     //无需登入
     @ResponseBody
     @RequestMapping("/search")
-    public PageInfo<Url> search(String mark, String keyword, int page, int limit){
+    public PageInfo<Url> search(String mark, String keyword, int page, int limit) {
         String s = null;
         try {
             s = BASE64Util.decryptBASE64(mark);
@@ -64,7 +63,7 @@ public class UrlController {
             throw new MessageException("网址添加失败:标志错误");
         }
 
-        if(s.length()<=6){
+        if (s.length() <= 6) {
             throw new MessageException("网址添加失败:请先登入，获取唯一的快速添加工具，并避免泄露给他人!");
         }
 
@@ -75,7 +74,7 @@ public class UrlController {
 
     @ResponseBody
     @RequestMapping("/updateUrlById")
-    public Message updateUrlById(Url url){
+    public Message updateUrlById(Url url) {
 
         urlService.updateUrlById(url);
 
@@ -86,7 +85,7 @@ public class UrlController {
 
     @ResponseBody
     @RequestMapping("/deleteUrlById")
-    public Message deleteUrlById(int id){
+    public Message deleteUrlById(int id) {
         urlService.deleteUrlById(id);
         return MessageUtil.success("网址删除成功！");
 
@@ -94,19 +93,19 @@ public class UrlController {
 
     @ResponseBody
     @RequestMapping("/getUrlsByFolderId")
-    public PageInfo<Url> getUrlsByFolderId(int pid,int page, int limit){
+    public PageInfo<Url> getUrlsByFolderId(int pid, int page, int limit) {
         return urlService.getUrlsByFolderId(pid, page, limit);
     }
 
     @ResponseBody
     @RequestMapping("/searchInFolder")
-    public PageInfo<Url> searchInFolder(int userId,String keyword,int pid,int page, int limit){
-        return urlService.searchInFolder(userId,keyword,pid, page, limit);
+    public PageInfo<Url> searchInFolder(int userId, String keyword, int pid, int page, int limit) {
+        return urlService.searchInFolder(userId, keyword, pid, page, limit);
     }
 
     @ResponseBody
     @RequestMapping("/addUrl")
-    public Message addUrl(HttpSession session,Url url){
+    public Message addUrl(HttpSession session, Url url) {
         User user = (User) session.getAttribute("user");
         url.setUserId(user.getId());
         url.setCreateTime(new Date());
@@ -139,14 +138,14 @@ public class UrlController {
             throw new MessageException("网址添加失败:标志错误");
         }
 
-        if(s.length()<=6){
+        if (s.length() <= 6) {
             throw new MessageException("网址添加失败:请先登入，获取唯一的快速添加工具，并避免泄露给他人!");
         }
 
         int userId = Integer.valueOf(s.substring(3, s.length() - 3));
         User user = userService.getUserById(userId);
 
-        if(user==null){
+        if (user == null) {
             throw new MessageException("网址添加失败:请先登入，获取唯一的快速添加工具，并避免泄露给他人!");
         }
 
@@ -165,13 +164,14 @@ public class UrlController {
     //-----以下是首页的一些请求----
     @ResponseBody
     @RequestMapping("/getRecommondData")
-    public PageInfo<UrlExtends> getRecommondData(int limit)  {
+    public PageInfo<UrlExtends> getRecommondData(int limit) {
         return urlService.getRecommondData(limit);
+
     }
 
     @ResponseBody
     @RequestMapping("/getSearchData")
-    public PageInfo<UrlExtends> getSearchData( String keyword, int page, int limit){
+    public PageInfo<UrlExtends> getSearchData(String keyword, int page, int limit) {
         return urlService.getSearchData(keyword, page, limit);
     }
 }
