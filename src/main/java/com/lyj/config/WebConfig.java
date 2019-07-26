@@ -55,6 +55,20 @@ public class WebConfig implements WebMvcConfigurer {
                         ,"/url/addUrlFaster" //快速添加网址，不需要进行登入
                         ,"/url/search" //快速添加网址，不需要进行登入
                         ,"/url/getRecommondData" //获取推荐数据
+                        ,"/url/searchByUserId" //根据用户id查询用户共享的网址
+                        ,"/folder/getFoldersByUserId" //根据用户id查询用户的文件夹数据
+                        ,"/url/searchInFolder" //在用户的个人主页进行文件夹的查看
+                        ,"/url/getHotDataIds"  //获取热点数据
+                        ,"/attention/getFansNumber" //获取粉丝数量
+                        ,"/attention/getAttentionNumber" //获取关注数量
+                        ,"/like/getUserLikesCount" //获取用户的点赞数量
+                        ,"/url/getHotData" //获取热榜数据
+                        ,"/attention/getAttention" //获取用户的关注用户
+                        ,"/like/getUserLikes" //获取用户的点赞信息
+                        ,"/attention/getFans" //获取用户的粉丝信息
+                        ,"/url/getSearchShareData" //查询共享的网址数据
+                        ,"/url/searchShareByUserId" //在用户主页查询用户的共享数据
+                        ,"/url/searchShareInFolder" //在用户主页查询用户对应文件夹的共享数据
                 );
     }
 

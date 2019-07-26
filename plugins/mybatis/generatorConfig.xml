@@ -35,7 +35,7 @@
         </commentGenerator>
         <!--数据库链接地址账号密码-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost/72cun"
+                        connectionURL="jdbc:mysql://localhost/72cun-nuxt"
                         userId="root"
                         password="123456">
         </jdbcConnection>
@@ -69,34 +69,56 @@
 
 
         <!--生成对应表及类名-->
-        <table
-                tableName="folder"
-                domainObjectName="Folder"
-                enableCountByExample="false"
-                enableUpdateByExample="true"
-                enableDeleteByExample="true"
-                enableSelectByExample="true"
-                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-            <!-- 在插入数据时返回主键 -->
-            <generatedKey column="id" sqlStatement="JDBC"/>
+        <!--<table-->
+                <!--tableName="folder"-->
+                <!--domainObjectName="Folder"-->
+                <!--enableCountByExample="true"-->
+                <!--enableUpdateByExample="true"-->
+                <!--enableDeleteByExample="true"-->
+                <!--enableSelectByExample="true"-->
+                <!--selectByExampleQueryId="false">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--&lt;!&ndash; 在插入数据时返回主键 &ndash;&gt;-->
+            <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
 
-        </table>
+        <!--</table>-->
+        <!--<table-->
+                <!--tableName="url"-->
+                <!--domainObjectName="Url"-->
+                <!--enableCountByExample="true"-->
+                <!--enableUpdateByExample="true"-->
+                <!--enableDeleteByExample="true"-->
+                <!--enableSelectByExample="true"-->
+                <!--selectByExampleQueryId="false">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
+        <!--</table>-->
+        <!--<table-->
+                <!--tableName="user"-->
+                <!--domainObjectName="User"-->
+                <!--enableCountByExample="true"-->
+                <!--enableUpdateByExample="true"-->
+                <!--enableDeleteByExample="true"-->
+                <!--enableSelectByExample="true"-->
+                <!--selectByExampleQueryId="false">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
+        <!--</table>-->
+        <!--<table-->
+                <!--tableName="attention"-->
+                <!--domainObjectName="Attention"-->
+                <!--enableCountByExample="true"-->
+                <!--enableUpdateByExample="true"-->
+                <!--enableDeleteByExample="true"-->
+                <!--enableSelectByExample="true"-->
+                <!--selectByExampleQueryId="false">-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
+        <!--</table>-->
         <table
-                tableName="url"
-                domainObjectName="Url"
-                enableCountByExample="false"
-                enableUpdateByExample="true"
-                enableDeleteByExample="true"
-                enableSelectByExample="true"
-                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
-        <table
-                tableName="user"
-                domainObjectName="User"
-                enableCountByExample="false"
+                tableName="likes"
+                domainObjectName="Likes"
+                enableCountByExample="true"
                 enableUpdateByExample="true"
                 enableDeleteByExample="true"
                 enableSelectByExample="true"

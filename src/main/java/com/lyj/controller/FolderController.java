@@ -6,6 +6,7 @@ import com.lyj.service.FolderService;
 import com.lyj.util.Message;
 import com.lyj.util.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,9 +41,8 @@ public class FolderController {
     }
 
     @RequestMapping("/getFoldersByUserId")
-    public List<Folder> getFoldersByUserId(HttpSession session){
-        User user = (User) session.getAttribute("user");
-        return folderService.getFoldersByUserId(user.getId());
+    public List<Folder> getFoldersByUserId( int userId){
+        return folderService.getFoldersByUserId(userId);
     }
 
     @RequestMapping("/updateFolderById")

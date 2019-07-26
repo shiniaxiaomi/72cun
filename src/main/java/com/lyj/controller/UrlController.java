@@ -4,20 +4,24 @@ import com.github.pagehelper.PageInfo;
 import com.lyj.exception.MessageException;
 import com.lyj.model.Url;
 import com.lyj.model.User;
+import com.lyj.service.AttentionService;
 import com.lyj.service.UrlService;
 import com.lyj.service.UserService;
 import com.lyj.util.BASE64Util;
 import com.lyj.util.Message;
 import com.lyj.util.MessageUtil;
 import com.lyj.model.vo.UrlExtends;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -37,6 +41,9 @@ public class UrlController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    AttentionService attentionService;
+
 
     @ResponseBody
     @RequestMapping("/getUrls")
@@ -46,10 +53,18 @@ public class UrlController {
     }
 
 
+    //查询用户的所有网址数据
     @ResponseBody
     @RequestMapping("/searchByUserId")
     public PageInfo<Url> search(int userId, String keyword, int page, int limit) {
-        return urlService.search(userId, keyword, page, limit);
+        return urlService.search(userId, keyword, page, limit,true);
+    }
+
+    //查询用户的所有网址数据
+    @ResponseBody
+    @RequestMapping("/searchShareByUserId")
+    public PageInfo<Url> searchShareByUserId(int userId, String keyword, int page, int limit) {
+        return urlService.search(userId, keyword, page, limit,false);
     }
 
     //无需登入
@@ -69,7 +84,7 @@ public class UrlController {
 
         int userId = Integer.valueOf(s.substring(3, s.length() - 3));
 
-        return urlService.search(userId, keyword, page, limit);
+        return urlService.search(userId, keyword, page, limit,true);
     }
 
     @ResponseBody
@@ -97,10 +112,18 @@ public class UrlController {
         return urlService.getUrlsByFolderId(pid, page, limit);
     }
 
+    //查询用户所有数据
     @ResponseBody
     @RequestMapping("/searchInFolder")
     public PageInfo<Url> searchInFolder(int userId, String keyword, int pid, int page, int limit) {
-        return urlService.searchInFolder(userId, keyword, pid, page, limit);
+        return urlService.searchInFolder(userId, keyword, pid, page, limit,true);
+    }
+
+    //查询用户共享的网址数据
+    @ResponseBody
+    @RequestMapping("/searchShareInFolder")
+    public PageInfo<Url> searchShareInFolder(int userId, String keyword, int pid, int page, int limit) {
+        return urlService.searchInFolder(userId, keyword, pid, page, limit,false);
     }
 
     @ResponseBody
@@ -162,6 +185,7 @@ public class UrlController {
 
 
     //-----以下是首页的一些请求----
+    //获取共享的推荐数据
     @ResponseBody
     @RequestMapping("/getRecommondData")
     public PageInfo<UrlExtends> getRecommondData(int limit) {
@@ -169,9 +193,25 @@ public class UrlController {
 
     }
 
+    //获取共享的搜索数据
     @ResponseBody
-    @RequestMapping("/getSearchData")
-    public PageInfo<UrlExtends> getSearchData(String keyword, int page, int limit) {
-        return urlService.getSearchData(keyword, page, limit);
+    @RequestMapping("/getSearchShareData")
+    public PageInfo<UrlExtends> getSearchShareData(String keyword, int page, int limit) {
+        return urlService.getSearchShareData(keyword, page, limit);
+    }
+
+    //获取共享的关注数据
+    @ResponseBody
+    @RequestMapping("/getAttentionData")
+    public PageInfo<UrlExtends> getAttentionData(int page, int limit,int userId) {
+        List<Integer> followUserIds = attentionService.getAttentionUsers(userId);
+        return urlService.getAttentionData(page, limit,followUserIds);
+    }
+
+    //获取热榜数据
+    @ResponseBody
+    @RequestMapping("/getHotData")
+    public PageInfo<UrlExtends> getHotData(int page, int limit) {
+        return urlService.getHotData(page, limit);
     }
 }

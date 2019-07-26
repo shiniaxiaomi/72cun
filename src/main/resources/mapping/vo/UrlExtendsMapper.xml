@@ -5,22 +5,55 @@
     <select id="getRecommondData" resultType="com.lyj.model.vo.UrlExtends" parameterType="java.lang.Integer">
        SELECT t1.*,user.userName FROM `url` AS t1
        JOIN (SELECT ROUND(RAND() * (SELECT MAX(id) FROM `url`)) AS id) AS t2
-       LEFT JOIN USER ON t1.userId=user.id
-        WHERE t1.id >= t2.id
+       LEFT JOIN user ON t1.userId=user.id
+        WHERE t1.id >= t2.id and t1.isShare=1
         ORDER BY t1.id ASC LIMIT #{limit};
     </select>
-    <select id="getAttentionData" resultType="com.lyj.model.vo.UrlExtends">
 
-
-    </select>
     <select id="getHotData" resultType="com.lyj.model.vo.UrlExtends">
-
-
+       SELECT url.*,COUNT(likes.urlId) AS COUNT ,user.userName FROM likes
+       LEFT JOIN url ON likes.urlId=url.id
+       LEFT JOIN user ON url.userId=user.id
+       WHERE likes.state=1 and url.isShare=1
+       GROUP BY likes.urlId
+       ORDER BY COUNT DESC
     </select>
+
     <select id="getSearchData" resultType="com.lyj.model.vo.UrlExtends" >
         select url.*,user.userName from url
         LEFT JOIN user on url.userId=user.id
         where url.label like #{keyword}
+         <if test="isAll==false">
+             and isShare=1
+         </if>
+    </select>
+    <select id="getAttentionData" resultType="com.lyj.model.vo.UrlExtends">
+        select url.*,user.userName from url
+        LEFT JOIN user on url.userId=user.id
+        where 1=1 and url.isShare=1
+        <if test="followUserIds!=null">
+            and url.userId in
+            <foreach collection="followUserIds" item="followUserId" index="index"
+                     open="(" close=")" separator=",">
+                ${followUserId}
+            </foreach>
+        </if>
+        <if test="followUserIds==null">
+            and url.userId=-1
+        </if>
+        order by url.createTime DESC
+    </select>
+    <select id="getUserLikes" resultType="com.lyj.model.vo.UrlExtends">
+       SELECT url.*,user.userName FROM likes
+       LEFT JOIN url ON likes.urlId=url.id
+       LEFT JOIN user ON url.userId=user.id
+       WHERE likes.userId=#{userId} and state=#{state} and url.isShare=1
+    </select>
+    <select id="getThisUserLikes" resultType="com.lyj.model.vo.UrlExtends">
+        SELECT url.*,user.userName FROM likes
+       LEFT JOIN url ON likes.urlId=url.id
+       LEFT JOIN user ON url.userId=user.id
+       WHERE likes.likesUserId=#{likesUserId} and state=#{state} and url.isShare=1
     </select>
 
 </mapper>

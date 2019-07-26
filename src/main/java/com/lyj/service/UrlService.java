@@ -37,10 +37,15 @@ public class UrlService {
     }
 
 
-    public PageInfo<Url> search(int userId, String keyword, int page, int limit) {
+    //查询对应用户的网址数据
+    public PageInfo<Url> search(int userId, String keyword, int page, int limit,boolean isAll) {
         PageHelper.startPage(page, limit);
         UrlExample urlExample = new UrlExample();
-        urlExample.createCriteria().andLabelLike("%" + keyword + "%").andUserIdEqualTo(userId);
+        UrlExample.Criteria criteria = urlExample.createCriteria();
+        criteria.andLabelLike("%" + keyword + "%").andUserIdEqualTo(userId);
+        if(!isAll){
+            criteria.andIsShareEqualTo(true);
+        }
         urlExample.setOrderByClause("createTime desc");//按照创建时间排序
         List<Url> urls = urlMapper.selectByExample(urlExample);
         return new PageInfo<>(urls);
@@ -68,11 +73,15 @@ public class UrlService {
         return new PageInfo<>(urls);
     }
 
-    public PageInfo<Url> searchInFolder(int userId,String keyword, int pid, int page, int limit) {
+    public PageInfo<Url> searchInFolder(int userId,String keyword, int pid, int page, int limit,boolean isAll) {
         PageHelper.startPage(page, limit);
         UrlExample urlExample = new UrlExample();
-        urlExample.createCriteria().andPidEqualTo(pid)
+        UrlExample.Criteria criteria = urlExample.createCriteria();
+        criteria.andPidEqualTo(pid)
                 .andLabelLike("%" + keyword + "%").andUserIdEqualTo(userId);
+        if(!isAll){
+            criteria.andIsShareEqualTo(true);
+        }
         urlExample.setOrderByClause("createTime desc");//按照创建时间排序
 
         List<Url> urls = urlMapper.selectByExample(urlExample);
@@ -87,14 +96,41 @@ public class UrlService {
     }
 
     //-----以下是首页的一些请求----
+    //推荐已经共享的网址数据
     public PageInfo getRecommondData(int limit) {
         List<UrlExtends> recommondData = urlExtendsMapper.getRecommondData(limit);
-        return new PageInfo<>(recommondData);
+        while(recommondData.size()<12){
+            recommondData.addAll(urlExtendsMapper.getRecommondData(limit));
+        }
+
+        if(recommondData.size()>12){
+            return new PageInfo<>(recommondData.subList(0,12));
+        }else{
+            return new PageInfo<>(recommondData);
+        }
     }
 
-    public PageInfo<UrlExtends> getSearchData(String keyword, int page, int limit) {
+    //搜索已经共享的网址数据
+    public PageInfo<UrlExtends> getSearchShareData(String keyword, int page, int limit) {
         PageHelper.startPage(page, limit);
-        List<UrlExtends> searchData = urlExtendsMapper.getSearchData("%"+keyword+"%");
+        List<UrlExtends> searchData = urlExtendsMapper.getSearchData("%"+keyword+"%",false);
         return new PageInfo<>(searchData);
     }
+
+    //获取关注用户的数据
+    public PageInfo<UrlExtends> getAttentionData(int page, int limit,List<Integer> followUserIds) {
+        PageHelper.startPage(page, limit);
+        List<UrlExtends> attentionData = urlExtendsMapper.getAttentionData(followUserIds);
+        return new PageInfo<>(attentionData);
+    }
+
+    //获取热榜数据
+    public PageInfo<UrlExtends> getHotData(int page, int limit) {
+        PageHelper.startPage(page, limit);
+
+        List<UrlExtends> urlExtendsList = urlExtendsMapper.getHotData();
+        return new PageInfo<>(urlExtendsList);
+
+    }
+
 }

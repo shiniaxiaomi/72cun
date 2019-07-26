@@ -10,13 +10,16 @@ import java.util.List;
  */
 public interface UrlExtendsMapper {
 
-    List<UrlExtends> getRecommondData(Integer limit);
+    List<UrlExtends> getRecommondData(int limit);
 
-    List<UrlExtends> getAttentionData(Integer limit);
+    List<UrlExtends> getAttentionData(@Param("followUserIds") List followUserIds);
 
-    List<UrlExtends> getHotData(Integer limit);
+    List<UrlExtends> getHotData();
 
-    List<UrlExtends> getSearchData(@Param("keyword")String keyword);
+    //isAll为true时表示查询所有数据，为false时查询共享数据
+    List<UrlExtends> getSearchData(@Param("keyword")String keyword,@Param("isAll") boolean isAll);
 
+    List<UrlExtends> getUserLikes(@Param("userId")int userId,@Param("state") int state);
 
+    List<UrlExtends> getThisUserLikes(@Param("likesUserId")int likesUserId,@Param("state") int state);
 }
