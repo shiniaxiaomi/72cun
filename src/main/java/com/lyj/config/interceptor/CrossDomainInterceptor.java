@@ -21,7 +21,22 @@ import java.util.*;
 public class CrossDomainInterceptor implements HandlerInterceptor {
 
 
-    public static Set allowedOrigins= new HashSet(Arrays.asList("http://www.72cun.cn","http://72cun.cn","http://134.175.150.32","http://127.0.0.1","http://www.test.cn"));//多源
+    public static Set allowedOrigins= new HashSet(Arrays.asList(
+            "http://www.72cun.cn",
+            "http://72cun.cn",
+            "https://www.72cun.cn",
+            "https://72cun.cn",
+
+            "http://134.175.150.32",//生产服务器ip
+            "https://134.175.150.32",
+
+            "http://127.0.0.1:7000",//本地测试
+            "http://localhost:7000",
+            "https://127.0.0.1:7000",
+            "https://localhost:7000",
+
+            "http://www.test.cn"
+    ));//多源
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
