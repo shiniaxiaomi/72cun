@@ -30,10 +30,10 @@ public class CrossDomainInterceptor implements HandlerInterceptor {
             "http://134.175.150.32",//生产服务器ip
             "https://134.175.150.32",
 
-            "http://127.0.0.1:7000",//本地测试
-            "http://localhost:7000",
-            "https://127.0.0.1:7000",
-            "https://localhost:7000",
+            "http://127.0.0.1:80",//本地测试
+            "http://localhost:80",
+            "https://127.0.0.1:80",
+            "https://localhost:80",
 
             "http://www.test.cn"
     ));//多源
